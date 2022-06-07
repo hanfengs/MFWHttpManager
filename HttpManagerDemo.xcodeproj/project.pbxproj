@@ -142,8 +142,6 @@
 		230F83201D4776AE00438083 /* AFgzipRequestSerializer */ = {
 			isa = PBXGroup;
 			children = (
-				230F83211D4776AE00438083 /* AFgzipRequestSerializer.h */,
-				230F83221D4776AE00438083 /* AFgzipRequestSerializer.m */,
 				230F83231D4776AE00438083 /* Godzippa */,
 			);
 			path = AFgzipRequestSerializer;
@@ -253,6 +251,8 @@
 				235DE61E1CA00E0F00103BC1 /* Task */,
 				23CAF3861CA026180013EAD8 /* MFWHttpManager.h */,
 				6A0DFE611CA3C38300A3891D /* MFWHttpManager.m */,
+				230F83211D4776AE00438083 /* AFgzipRequestSerializer.h */,
+				230F83221D4776AE00438083 /* AFgzipRequestSerializer.m */,
 			);
 			path = MFWHttpManager;
 			sourceTree = "<group>";
@@ -385,6 +385,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
