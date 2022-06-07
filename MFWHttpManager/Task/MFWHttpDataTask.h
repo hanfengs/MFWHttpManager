@@ -79,7 +79,7 @@ typedef enum{
 
 @end
 
-/* 
+/*
  MFWHttpTask - 封装一个接口请求任务，包括接口请求与响应。
  MFWHttpRequest - 封装一个完整的接口请求
  MFWHttpResponse - 封装一个完整的接口响应
@@ -95,7 +95,7 @@ typedef enum{
 @property (nonatomic, strong) MFWRequest *request;
 
 //response封装对象
-@property (nonatomic, strong, readonly) MFWResponse *response;   
+@property (nonatomic, strong, readonly) MFWResponse *response;
 
 @property (nonatomic, strong) NSError *error;
 

@@ -7,6 +7,7 @@
 #import "MFWResponse.h"
 #import "MFWHttpTaskAFNEngine.h"
 #import "MFWHttpManager.h"
+#import <CommonCrypto/CommonDigest.h>
 
 #define MFWHttpTaskIdentifierSeparator @"$#@#$"
 
@@ -125,15 +126,37 @@
 - (NSString *)resourceId
 {
     if([_resourceId length]<1){
-        NSString *str = [NSString stringWithFormat:@"%@%lu%@%@",self.request.URLString,(unsigned long)self.request.httpMethod,self.request.params,self.requestSupportGzip?@"gzip":@""];
-        
-        NSString *dataID =  [str stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSData *data = [dataID dataUsingEncoding:NSUTF8StringEncoding];
-        NSString *resourceId = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-        _resourceId = resourceId;
+        NSString *url = [self.request.URLString copy];
+        NSString *suffix;
+        if ([self.request.URLString componentsSeparatedByString:@"."] != nil) {
+             suffix = [[self.request.URLString componentsSeparatedByString:@"."] lastObject];
+        }
+        NSString *md5String = [self IGC_md5:url];
+        if (suffix != nil) {
+            md5String = [NSString stringWithFormat:@"%@.%@",md5String,suffix];
+        }
+        _resourceId = md5String;
     }
     return _resourceId;
 }
+
+
+
+
+- (NSString *)IGC_md5:(NSString *)string{
+    const char *cStr = [string UTF8String];
+    unsigned char digest[CC_MD5_DIGEST_LENGTH];
+    
+    CC_MD5(cStr, (CC_LONG)strlen(cStr), digest);
+    
+    NSMutableString *result = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
+    for (int i = 0; i < CC_MD5_DIGEST_LENGTH; i++) {
+        [result appendFormat:@"%02X", digest[i]];
+    }
+    
+    return result;
+}
+
 
 #pragma mark - override identifier
 - (NSString *)identifier
